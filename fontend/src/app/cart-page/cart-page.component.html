@@ -1,0 +1,46 @@
+<app-title title="Cart Page" margin ="1.5rem 0 0 2.5rem"></app-title>
+<app-not-found
+    [visible]="!cart || !cart.items.length"
+    notFoundMessage="Cart Page Is Empty!"
+    resetLinkText="Go To HomePage"
+     ></app-not-found>
+<div class="container">
+    <ul>
+        <li *ngFor="let cartItem of cart.items">
+            <div>
+                <img [src]="cartItem.pork.imageUrl" [alt]="cartItem.pork.name">
+            </div>
+            <div>
+                <a routerLink="/pork/{{cartItem.pork.id}}">
+                    {{cartItem.pork.name}}
+                </a>
+            </div>
+            <div>
+                <input type="number" 
+                #quantityInput 
+                [value]="cartItem.quantity" 
+                (change)="changeQuantity(cartItem, quantityInput.value)" 
+                min="1" 
+                step="1" 
+                placeholder="Enter quantity" />
+            </div>
+            <div>
+                {{cartItem.price }} บาท
+            </div>
+
+            <div>
+                <button class="remove-button" (click)="removeFormCart(cartItem)">
+                    Remove
+                </button>
+            </div>
+        </li>
+    </ul>
+    <div class="checkout">
+        <div>
+            <div class="porks-count">{{cart.totalCount}}</div>
+            <div class="total-price">{{cart.totalPrice}}บาท</div>
+        </div>
+
+            <a routerLink="/checkout">Proceed to checkout</a>
+    </div>
+</div>
